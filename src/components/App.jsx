@@ -51,6 +51,7 @@ class App extends Component {
       this.setState({ contacts: parsedContacts })
     }
   }
+  
 
   componentDidUpdate(precProps, prevState,) {
     if (this.state.contacts !== prevState.contacts) {
