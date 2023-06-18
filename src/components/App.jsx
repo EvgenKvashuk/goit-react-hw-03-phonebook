@@ -18,7 +18,7 @@ class App extends Component {
       name,
       number,
     }
-    
+
     const names = this.state.contacts.map(contact => contact.name);
     const numbers = this.state.contacts.map(contact => contact.number);
 
@@ -27,9 +27,9 @@ class App extends Component {
     } else if (numbers.includes(number)) {
       alert(`${number} is already in contacts`);
     } else {
-        this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts]
-    }));
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts]
+      }));
     }
 
   }
@@ -42,6 +42,20 @@ class App extends Component {
 
   changeFilter = (e) => {
     this.setState({ filter: e.currentTarget.value })
+  }
+
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts })
+    }
+  }
+
+  componentDidUpdate(precProps, prevState,) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
   }
   // ==============================================================================
   render() {
